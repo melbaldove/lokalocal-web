@@ -1,0 +1,41 @@
+{
+  "name": "partner",
+  "plural": "partner",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "partner"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "String",
+      "required": false,
+      "defaultFn": "uuidv4",
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "partnerName": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "partner_name",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include head %>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <% include header %>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <% include sidebar.ejs %>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- content -->
+  <div class="content-wrapper">
+
+    <section class="content-header">
+      <h1>
+        Schedules
+        <a href="/schedules/new" class="btn btn-primary btn-sm">Add New</a>
+      </h1>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="form-group">
+          <ul class="list-inline">
+            <li><a href="/schedules">PENDING</a></li>
+            <li><a href="/schedules/others" class="text-muted">OTHERS</a></li>
+          </ul>
+        </div>
+
+
+        <div class="box box-primary">
+          <div class="box-body">
+            <table id="schedule_table" class="table table-hover" width="100%">
+              <thead>
+              <tr>
+                <th></th>
+                <th>Schedule Date</th>
+                <th>Driver</th>
+                <th>Route Group</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- end: content -->
+
+  <footer class="main-footer">
+    <% include footer.ejs %>
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<% include foot.ejs %>
+</body>
+</html>

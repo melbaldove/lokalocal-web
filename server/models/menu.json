@@ -1,5 +1,6 @@
 {
   "name": "menu",
+  "plural": "menu",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -58,7 +59,7 @@
       "scale": 10,
       "precision": 2,
       "postgresql": {
-        "columnName": "vendor_id",
+        "columnName": "coffee_needed",
         "dataType": "double precision",
         "dataScale": 10,
         "dataPrecision": 2
