@@ -12,14 +12,13 @@
   },
   "properties": {
     "id": {
-      "type": "String",
+      "type": "Number",
       "id": 1,
       "required": false,
-      "defaultFn": "uuidv4",
       "length": 255,
       "postgresql": {
         "columnName": "id",
-        "dataType": "character varying",
+        "dataType": "serial",
         "dataLength": 255,
         "nullable": "NO"
       }

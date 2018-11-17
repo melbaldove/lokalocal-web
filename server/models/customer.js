@@ -2,6 +2,30 @@
 const app = require('../server');
 
 module.exports = function(Customer) {
+  Customer.registration = (fields) => {
+    const Wallet = app.models.Wallet;
+
+    return Wallet.create()
+      .then(wallet => {
+        return Customer.create({
+          lastName: fields.lastName,
+          firstName: fields.firstName,
+          username: fields.username,
+          passwd: fields.password,
+          qrId: wallet.loftCardNumber,
+        })
+        .catch(err => Wallet.delete(wallet))
+      })
+  };
+
+  Customer.remoteMethod('registration', {
+    http: {path: '/register', verb: 'post'},
+    accepts: [
+      {arg: 'fields', type: 'object', required: true, http: {source: 'body'}},
+    ],
+    returns: {root: true, type: 'object'},
+  });
+
   Customer.byQRid = (qrId) => {
     const Customer = app.models.Customer;
 
