@@ -47,8 +47,8 @@
               <tr>
                 <th>Location</th>
                 <td>
-                  <input type="text" class="form-control" name="location[lat]" value="<%= partner.location.lat %>" placeholder="Latitude"/>
-                  <input type="text" class="form-control" name="location[lng]" value="<%= partner.location.lng %>" placeholder="Longitude"/>
+                  <input type="text" class="form-control" name="location[lat]" value="<%= partner.location.lat || 0 %>" placeholder="Latitude"/>
+                  <input type="text" class="form-control" name="location[lng]" value="<%= partner.location.lng || 0 %>" placeholder="Longitude"/>
                 </td>
               </tr>
               <tr>
