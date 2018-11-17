@@ -135,4 +135,53 @@ module.exports = function(Partner) {
     ],
     returns: {root: true, type: 'object'},
   });
+
+  Partner.menuItemsWithBestSeller = (partnerId) => {
+    const Menu = app.models.Menu;
+    const Transaction = app.models.Transaction;
+
+    return Transaction.find({ where: { and: [
+        {createdAt: {gt: Date.now() - (1000 * 60 * 60 * 24 * 7)}},
+        {partnerId: partnerId}
+      ]}
+    })
+    .then(transactions => {
+      return [].concat.apply([], transactions.map(transaction => transaction.order.items));
+    })
+    .then(items => {
+      return items.reduce((result, { itemId, quantity }) => {
+        if (!result[itemId]) {
+          result[itemId] = {
+            itemId,
+            quantity: 0,
+          }
+        }
+        result[itemId].quantity += quantity;
+        return result;
+      }, {})
+    })
+    .then(items => Object.values(items).sort((a, b) => a.quantity - b.quantity))
+    .then(sortedItems => {
+      return Menu.find({where: {partnerId: partnerId}})
+        .then(menuItems => {
+          let mostBuy = sortedItems[0];
+          return menuItems.map(menuItem => {
+            if (mostBuy.itemId === menuItem.id) {
+              menuItem.tag = ["BEST_SELLER"];
+            }
+            return menuItem;
+          })
+        })
+    });
+
+
+  };
+
+  Partner.remoteMethod('menuItemsWithBestSeller', {
+    http: {path: '/:partnerId/menu', verb: 'get'},
+    accepts: [
+      {arg: 'partnerId', type: 'string', required: true, http: {source: 'path'}},
+    ],
+    returns: {root: true, type: 'object'},
+  });
 };
