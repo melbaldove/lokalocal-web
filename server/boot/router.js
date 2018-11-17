@@ -28,9 +28,15 @@ module.exports = function(app) {
   });
 
   router.get('/partners/overview', function(req, res) {
-    res.render('partners/overview', {
-      partnerId: req.cookies.partner_id,
-    });
+    const Transaction = app.models.Transaction;
+
+    return Transaction.latestBuy(req.cookies.partner_id)
+      .then(transactions => {
+        res.render('partners/overview', {
+          partnerId: req.cookies.partner_id,
+          latestTransactions: transactions,
+        });
+      })
   });
 
   router.post('/partners/login', function(req, res) {

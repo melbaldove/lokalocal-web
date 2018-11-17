@@ -8,7 +8,7 @@ class CoffeeSalesChart {
     const partnerId = document.querySelector("[name='partner-id']").content;
     // chart.style.height = '128px';
 
-    let lineChart = new Chart(ctx, {
+     this.lineChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ["January", "February", "March", "April", "May", "June", "July","AUgust", "september", "october", "november", "December"],
@@ -26,22 +26,21 @@ class CoffeeSalesChart {
 
     Rx.Observable.fromEvent(changer, 'change')
       .map(e => e.target.value)
-      // .startWith(
-      //   axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: changer.value, partnerId: partnerId}})
-      //     .then(response => {
-      //       let {data} = response;
-      //
-      //       this.updateData(this.lineChart, data.map(datum => datum.amount))
-      //       console.log(changer.value);
-      //       return changer.value;
-      //     })
-      // )
+      .startWith(
+        axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: 2018, partnerId: partnerId}})
+          .then(response => {
+            let {data} = response;
+
+            this.updateData(this.lineChart, data.map(datum => datum.amount));
+            return 2018;
+          })
+      )
       .subscribe(value => {
         return axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: value, partnerId: partnerId}})
           .then(response => {
             let {data} = response;
 
-            this.updateData(lineChart, data.map(datum => datum.amount))
+            this.updateData(this.lineChart, data.map(datum => datum.amount))
           })
       });
 

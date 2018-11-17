@@ -46,7 +46,21 @@
                 </div>
               </div>
               <div class="col-md-4">
-
+                <p class="text-center lead">Latest Transactions</p>
+                <ul class="products-list product-list-in-box">
+                  <% latestTransactions.forEach(transaction => { %>
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="<%= transaction.itemPath %>" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <a href="javascript:void(0)" class="product-title"><%= transaction.itemName %>
+                        <span class="label label-success pull-right"><%= transaction.totalCoffeeBeans %> beans</span>
+                      </a>
+                    </div>
+                  </li>
+                  <% }); %>
+                </ul>
               </div>
             </div>
           </div>

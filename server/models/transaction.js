@@ -89,4 +89,56 @@ module.exports = function(Transaction) {
     ],
     returns: {root: true, type: 'object'},
   });
+
+  Transaction.latestBuy = (partnerId) => {
+    const Menu = app.models.Menu;
+
+    return Transaction.find({
+      where: { partnerId: partnerId },
+      order: 'createdAt DESC',
+      limit: 5,
+    })
+      .then(transactions => {
+        let orders = transactions.map(transaction => transaction.order.items);
+        let uniqueItemOrders = [].concat.apply([], orders)
+          // .reduce((result, order) => {
+          //   if (!order.itemId) {
+          //     return result;
+          //   }
+          //
+          //   if (!result[order.itemId]) {
+          //     result[order.itemId] = {
+          //       itemId: order.itemId,
+          //       quantity: 0
+          //     }
+          //   }
+          //
+          //   result[order.itemId].quantity += order.quantity;
+          //   return result;
+          // }, {})
+
+        return Object.values(uniqueItemOrders);
+      })
+      .then(orders => {
+        return Promise.map(orders, order => {
+          return Menu.findById(order.itemId)
+            .then(menuItem => {
+              return {
+                itemId: menuItem.itemId,
+                itemName: menuItem.itemName,
+                itemPath: menuItem.itemPath,
+                totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
+              };
+            })
+        })
+      })
+  };
+
+  Transaction.remoteMethod('latestBuy', {
+    http: {path: '/latest-buy', verb: 'get'},
+    accepts: [
+      {arg: 'partnerId', type: 'string', http: {source: 'query'}},
+    ],
+    returns: {root: true, type: 'object'},
+  });
 };
