@@ -57,6 +57,33 @@
         "columnName": "credit",
         "dataType": "integer"
       }
+    },
+    "partnerId": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "partner_id",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "order": {
+      "type": "Object",
+      "required": true,
+      "postgresql": {
+        "columnName": "order",
+        "dataType": "json"
+      }
+    },
+    "createdAt": {
+      "type": "Date",
+      "required": false,
+      "defaultFn": "now",
+      "postgresql": {
+        "columnName": "created_at",
+        "dataType": "timestamptz"
+      }
     }
   },
   "validations": [],

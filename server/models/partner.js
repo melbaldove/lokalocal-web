@@ -118,6 +118,9 @@ module.exports = function(Partner) {
           amount: totalPrice,
           debit: walletBalance.accountId,
           credit: 1,
+          partnerId: partnerId,
+          order: order,
+          createdAt: Date.now(),
         })
       }
     )
