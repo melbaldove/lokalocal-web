@@ -43,6 +43,16 @@
         "dataLength": 255
       }
     },
+    "itemPath": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "item_path",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
     "vendorId": {
       "type": "String",
       "required": true,

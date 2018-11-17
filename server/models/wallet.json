@@ -23,16 +23,15 @@
         "nullable": "NO"
       }
     },
-    "loftUserId": {
-      "type": "Number",
-      "required": true,
-      "scale": 10,
-      "precision": 2,
+    "loftCardNumber": {
+      "type": "String",
+      "required": false,
+      "defaultFn": "uuidv4",
+      "length": 255,
       "postgresql": {
-        "columnName": "loft_user_id",
-        "dataType": "integer",
-        "dataScale": 10,
-        "dataPrecision": 2
+        "columnName": "loft_card_no",
+        "dataType": "character varying",
+        "dataLength": 255
       }
     }
   },

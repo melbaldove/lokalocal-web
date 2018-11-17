@@ -17,6 +17,10 @@
     "dataSource": "local",
     "public": true
   },
+  "menu": {
+    "dataSource": "local",
+    "public": true
+  },
   "partner": {
     "dataSource": "local",
     "public": true
