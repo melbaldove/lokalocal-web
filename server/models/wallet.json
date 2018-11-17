@@ -1,0 +1,43 @@
+{
+  "name": "wallet",
+  "plural": "wallet",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "accounts"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "Number",
+      "id": 1,
+      "required": false,
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "serial",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "loftUserId": {
+      "type": "Number",
+      "required": true,
+      "scale": 10,
+      "precision": 2,
+      "postgresql": {
+        "columnName": "loft_user_id",
+        "dataType": "integer",
+        "dataScale": 10,
+        "dataPrecision": 2
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,42 @@
+{
+  "name": "loft-user",
+  "plural": "loft-user",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "loft_user"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "String",
+      "id": 1,
+      "required": false,
+      "defaultFn": "uuidv4",
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "name": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "name",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

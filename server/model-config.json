@@ -20,5 +20,17 @@
   "partner": {
     "dataSource": "local",
     "public": true
+  },
+  "wallet": {
+    "dataSource": "local",
+    "public": true
+  },
+  "balance": {
+    "dataSource": "local",
+    "public": true
+  },
+  "loft-user": {
+    "dataSource": "local",
+    "public": true
   }
 }

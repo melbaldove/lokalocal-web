@@ -1,0 +1,41 @@
+{
+  "name": "balance",
+  "plural": "balance",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "account_balances"
+    }
+  },
+  "properties": {
+    "accountId": {
+      "type": "Number",
+      "required": false,
+      "default": "null",
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "integer",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "balance": {
+      "type": "Number",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "balance",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
