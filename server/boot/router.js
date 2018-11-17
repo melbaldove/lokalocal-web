@@ -112,7 +112,23 @@ module.exports = function(app) {
     const Menu = app.models.Menu;
 
     return Menu.findById(req.params.menuId)
-      .then(menu => res.render('partners/menu-edit', { menu, }))
+      .then(menu => res.render('partners/menu-edit', { menu, partnerId: req.cookies.partner_id,}))
+  });
+
+  router.post('/partners/menu/:menuId', function(req, res) {
+    const Menu = app.models.Menu;
+
+    return Menu.findById(req.params.menuId)
+      .then(menu => {
+        menu.itemCode = req.body.itemCode;
+        menu.itemName = req.body.itemName;
+        menu.itemPath = req.body.itemPath;
+        menu.coffeeNeeded = req.body.coffeeNeeded;
+        menu.price = req.body.price;
+        menu.partnerId = req.cookies.partner_id;
+        return Menu.upsert(menu)
+          .then(ignore => res.redirect(`/partners/menu/${req.params.menuId}`));
+      })
   });
 
   app.use(router);
