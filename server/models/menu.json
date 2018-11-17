@@ -1,0 +1,72 @@
+{
+  "name": "menu",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "menu"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "String",
+      "required": false,
+      "defaultFn": "uuidv4",
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "character varying",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "itemCode": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "item_code",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "itemName": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "item_name",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "vendorId": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "vendor_id",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "coffeeNeeded": {
+      "type": "Number",
+      "required": true,
+      "scale": 10,
+      "precision": 2,
+      "postgresql": {
+        "columnName": "vendor_id",
+        "dataType": "double precision",
+        "dataScale": 10,
+        "dataPrecision": 2
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
