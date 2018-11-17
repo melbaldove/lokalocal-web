@@ -11,9 +11,16 @@ module.exports = function(app) {
     res.render('partners');
   });
 
-  // router.get('/projects', function(req, res) {
-  //   res.render('projects');
-  // });
+  router.get('/partners/new', function(req, res) {
+    res.render('partners-new');
+  });
+
+  router.post('/partners/new', function(req, res) {
+    const Partner = app.models.Partner;
+
+    return Partner.create(req.body)
+      .then(ignore => res.redirect('/partners'));
+  });
 
   app.use(router);
 };

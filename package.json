@@ -8,7 +8,9 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node .",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "build": "webpack --config webpack.config.js",
+    "start:dev": "nodemon --ignore assets/ --exec \"npm run build && npm start\""
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -20,11 +22,38 @@
     "loopback-connector-postgresql": "^3.5.0",
     "serve-favicon": "^2.0.1",
     "serve-static": "^1.13.2",
-    "strong-error-handler": "^3.0.0"
+    "strong-error-handler": "^3.0.0",
+    "uuidv4": "^2.0.0"
   },
   "devDependencies": {
+    "css-loader": "^1.0.1",
+    "dotenv-webpack": "^1.5.7",
     "eslint": "^3.17.1",
-    "eslint-config-loopback": "^8.0.0"
+    "eslint-config-loopback": "^8.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "grunt": "^1.0.3",
+    "grunt-bootlint": "^0.9.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-csslint": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-less": "^0.12.0",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-cssjanus": "^0.2.4",
+    "grunt-image": "^1.5.2",
+    "grunt-includes": "^0.4.5",
+    "grunt-jscs": "^3.0.1",
+    "grunt-less": "^0.1.7",
+    "grunt-notify": "^0.4.5",
+    "grunt-text-replace": "^0.4.0",
+    "less": "^2.7.2",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^3.12.0"
   },
   "repository": {
     "type": "",

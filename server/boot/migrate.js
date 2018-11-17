@@ -12,6 +12,6 @@ module.exports = function(server) {
   //     }
   //   });
   // }
-  ds.automigrate();
+  // ds.automigrate();
 };
 
