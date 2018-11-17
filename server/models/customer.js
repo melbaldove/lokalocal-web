@@ -14,7 +14,15 @@ module.exports = function(Customer) {
           passwd: fields.password,
           qrId: wallet.loftCardNumber,
         })
-        .catch(err => Wallet.destroyById(wallet.id))
+        .catch(err => {
+          return Wallet.destroyById(wallet.id)
+            .then(ignore => {
+              return Promise.reject({
+                status: 500,
+                message: err,
+              })
+            })
+        })
       })
   };
 
