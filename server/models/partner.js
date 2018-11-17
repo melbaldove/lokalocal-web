@@ -146,10 +146,12 @@ module.exports = function(Partner) {
       ]}
     })
     .then(transactions => {
-      return [].concat.apply([], transactions.map(transaction => transaction.order.items));
-    })
-    .then(items => {
-      return items.reduce((result, { itemId, quantity }) => {
+      let items = [].concat.apply([], transactions.map(transaction => transaction.order.items));
+
+      items = items.reduce((result, { itemId, quantity }) => {
+        if (!itemId) {
+          return result;
+        }
         if (!result[itemId]) {
           result[itemId] = {
             itemId,
@@ -159,15 +161,19 @@ module.exports = function(Partner) {
         result[itemId].quantity += quantity;
         return result;
       }, {})
+
+      let sortedItems = Object.values(items).sort((a, b) => a.quantity - b.quantity);
+      return sortedItems;
     })
-    .then(items => Object.values(items).sort((a, b) => a.quantity - b.quantity))
     .then(sortedItems => {
       return Menu.find({where: {partnerId: partnerId}})
         .then(menuItems => {
           let mostBuy = sortedItems[0];
           return menuItems.map(menuItem => {
-            if (mostBuy.itemId === menuItem.id) {
-              menuItem.tag = ["BEST_SELLER"];
+            if (mostBuy) {
+              if (mostBuy.itemId === menuItem.id) {
+                menuItem.tag = ["BEST_SELLER"];
+              }
             }
             return menuItem;
           })
