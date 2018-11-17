@@ -14,6 +14,7 @@
     "start:dev": "nodemon --ignore assets/ --exec \"npm run build && npm start\""
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "compression": "^1.0.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.5.2",

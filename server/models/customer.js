@@ -65,7 +65,7 @@ module.exports = function(Customer) {
           })
         }
 
-        return { qrId: customer[0].qrId };
+        return customer[0];
       })
 
   };
