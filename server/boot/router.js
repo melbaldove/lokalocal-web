@@ -19,7 +19,28 @@ module.exports = function(app) {
     const Partner = app.models.Partner;
 
     return Partner.create(req.body)
-      .then(ignore => res.redirect('/partners'));
+      .then(ignore => res.redirect('/partners'))
+      .catch(ignore => res.redirect('/partners'));
+  });
+
+  router.get('/partners/login', function(req, res) {
+    res.render('partners/login');
+  });
+
+  router.get('/partners/overview', function(req, res) {
+    res.render('partners/overview');
+  });
+
+  router.post('/partners/login', function(req, res) {
+    const Partner = app.models.Partner;
+
+    return Partner.login(req.body)
+      .then(success => res.redirect('/partners/overview'))
+      .catch(failed => res.redirect('/partners/login'));
+  });
+
+  router.get('/partners/menu', function(req, res) {
+    res.render('partners/menu');
   });
 
   router.get('/partners/:partnerId', function(req, res) {
@@ -43,6 +64,17 @@ module.exports = function(app) {
       })
       .then(ignore => res.redirect(`/partners/${req.params.partnerId}`))
       .catch(ignore => res.redirect(`/partners/${req.params.partnerId}`))
+  });
+
+  router.get('/partners/menu/new', function(req, res) {
+    res.render('partners/menu-new');
+  });
+
+  router.get('/partners/menu/:menuId', function(req, res) {
+    const Menu = app.models.Menu;
+
+    return Menu.findById(req.params.menuId)
+      .then(menu => res.render('partners/menu-edit', { menu, }))
   });
 
   app.use(router);

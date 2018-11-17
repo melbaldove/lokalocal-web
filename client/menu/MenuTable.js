@@ -1,17 +1,18 @@
-class PartnerTable {
+class MenuTable {
   constructor(el) {
-    const url = `/api/partner`;
+    const url = `/api/menu`;
     this.setupDt(el, url);
   }
 
   setupDt(el, url){
     let dtColumns = [
-      'partnerName',
+      'itemName',
+      'itemPath',
       ''
     ];
     console.log(el);
 
-    $("#partners_table").DataTable({
+    $("#menu_table").DataTable({
       searching: false,
       processing: true,
       serverSide: true,
@@ -48,7 +49,8 @@ class PartnerTable {
         //   data:           null,
         //   defaultContent: ''
         // },
-        { data: 'partnerName' },
+        { data: 'itemName' },
+        { data: 'itemPath' },
         { data: null },
       ],
       columnDefs: [
@@ -58,12 +60,20 @@ class PartnerTable {
         },
         {
           targets: [1],
+          orderable: false,
+          render: (type, data, row, meta) => {
+
+            return `<img class="img-responsive" src="${row.itemPath}" />`;
+          },
+        },
+        {
+          targets: [2],
           width: "210px",
           orderable: false,
           render: (type, data, row, meta) => {
             let button = '';
 
-            button = `<a class="btn btn-primary" href="/partners/${row.id}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="pointer-events: none"></i></a>`;
+            button = `<a class="btn btn-primary" href="/partners/menu/${row.id}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="pointer-events: none"></i></a>`;
             //  button += `<btn class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" data-cancel-schedule-id="${row.id}"><i class="fa fa-ban" aria-hidden="true" style="pointer-events: none"></i></btn>`;
             //  button += `<btn class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" data-delete-schedule-id="${row.id}"><i class="fa fa-trash-o" aria-hidden="true" style="pointer-events: none"></i></btn>`;
 
@@ -76,4 +86,4 @@ class PartnerTable {
   }
 }
 
-export default PartnerTable;
+export default MenuTable;

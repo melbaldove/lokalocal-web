@@ -52,6 +52,26 @@
         "columnName": "location",
         "dataType": "point"
       }
+    },
+    "username": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "username",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "passwd": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "passwd",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
     }
   },
   "validations": [],

@@ -31,40 +31,30 @@
 
     <section class="content">
       <div class="container-fluid">
-        <form id="partner_form" method="POST" action="/partners/new">
+        <form id="partner_form" method="POST" action="/menu/<%= menu.id %>">
+          <input type="hidden" name="_method" value="PUT">
           <fieldset>
             <table class="table table-settings">
               <tbody>
               <tr>
-                <th>Partner Name</th>
-                <td colspan="4"><input type="text" class="form-control" name="partnerName"/></td>
+                <th>Item Code</th>
+                <td><input type="text" class="form-control" name="itemCode" value="<%= menu.itemCode %>"/></td>
               </tr>
               <tr>
-                <th>Address</th>
-                <td><input type="text" class="form-control" name="address" /></td>
+                <th>Item Name</th>
+                <td><input type="text" class="form-control" name="itemName" value="<%= menu.itemName %>"/></td>
               </tr>
               <tr>
-                <th>Location</th>
-                <td>
-                  <input type="text" class="form-control" name="location[lat]" placeholder="Latitude"/>
-                  <input type="text" class="form-control" name="location[lng]" placeholder="Longitude"/>
-                </td>
+                <th>Image</th>
+                <td><input type="text" class="form-control" name="itemPath" value="<%= menu.itemPath %>"/></td>
               </tr>
               <tr>
-                <th>Username</th>
-                <td>
-                  <input type="text" class="form-control" name="username"/>
-                </td>
-              </tr>
-              <tr>
-                <th>Password</th>
-                <td>
-                  <input type="password" class="form-control" name="passwd"/>
-                </td>
+                <th>Coffee Beans Needed</th>
+                <td><input type="number" class="form-control" name="coffeeNeeded" value="<%= menu.coffeeNeeded %>"/></td>
               </tr>
               <tr>
                 <td>
-                  <button id="employer_form_submit" type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary">
                     Submit
                   </button>
                 </td>
