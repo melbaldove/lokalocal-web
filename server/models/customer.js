@@ -53,4 +53,28 @@ module.exports = function(Customer) {
     ],
     returns: {root: true, type: 'object'},
   });
+
+  Customer.login = (fields) => {
+    const {username, password } = fields;
+    return Customer.find({ where: {and: [{username: username}, {passwd: password},]}})
+      .then(customer => {
+        if (customer.length === 0) {
+          return Promise.reject({
+            status: 500,
+            message: "Username and/or password is incorrect."
+          })
+        }
+
+        return { qrId: customer[0].qrId };
+      })
+
+  };
+
+  Customer.remoteMethod('login', {
+    http: {path: '/login', verb: 'post'},
+    accepts: [
+      {arg: 'fields', type: 'object', required: true, http: {source: 'body'}},
+    ],
+    returns: {root: true, type: 'object'},
+  });
 };
