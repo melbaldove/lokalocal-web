@@ -35,7 +35,11 @@ module.exports = function(app) {
     const Partner = app.models.Partner;
 
     return Partner.login(req.body)
-      .then(success => res.redirect('/partners/overview'))
+      .then(partner => {
+        res.cookie('partner_id', partner.id, { signed: true , maxAge: 300000 });
+        res.set('X-Partner-ID', partner.id);
+        res.redirect('/partners/overview')
+      })
       .catch(failed => res.redirect('/partners/login'));
   });
 
@@ -50,10 +54,20 @@ module.exports = function(app) {
       .then(partner => res.render('partners-edit', { partner, }))
   });
 
+
+  router.post('/partners/menu', function(req, res) {
+    const Menu = app.models.Menu;
+
+    return Menu.create(req.body)
+      .then(menu => res.redirect('/partners/menu'))
+      .catch(err => {
+        console.log(err);
+        res.redirect('/partners/menu/new')
+      })
+  });
+
   router.post('/partners/:partnerId', function(req, res) {
     const Partner = app.models.Partner;
-
-    console.log(req.body);
 
     return Partner.findById(req.params.partnerId)
       .then(currentPartner => {
@@ -63,14 +77,17 @@ module.exports = function(app) {
         })
       })
       .then(ignore => res.redirect(`/partners/${req.params.partnerId}`))
-      .catch(ignore => res.redirect(`/partners/${req.params.partnerId}`))
+      .catch(err => {
+        console.log(err);
+        res.redirect(`/partners/${req.params.partnerId}`)
+      })
   });
 
   router.get('/partners/menu/new', function(req, res) {
     res.render('partners/menu-new');
   });
 
-  router.get('/partners/menu/:menuId', function(req, res) {
+  router.post('/partners/menu/:menuId', function(req, res) {
     const Menu = app.models.Menu;
 
     return Menu.findById(req.params.menuId)

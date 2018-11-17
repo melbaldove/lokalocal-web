@@ -31,7 +31,7 @@
 
     <section class="content">
       <div class="container-fluid">
-        <form id="partner_form" method="POST" action="/menu/<%= menu.id %>">
+        <form id="partner_form" method="POST" action="/partners/menu">
           <fieldset>
             <table class="table table-settings">
               <tbody>
@@ -50,6 +50,10 @@
               <tr>
                 <th>Coffee Beans Needed</th>
                 <td><input type="number" class="form-control" name="coffeeNeeded"/></td>
+              </tr>
+              <tr>
+                <th>Price</th>
+                <td><input type="text" class="form-control" name="price"/></td>
               </tr>
               <tr>
                 <td>

@@ -13,6 +13,7 @@
   "properties": {
     "id": {
       "type": "String",
+      "id": 1,
       "required": false,
       "defaultFn": "uuidv4",
       "length": 255,
@@ -70,6 +71,19 @@
       "precision": 2,
       "postgresql": {
         "columnName": "coffee_needed",
+        "dataType": "double precision",
+        "dataScale": 10,
+        "dataPrecision": 2
+      }
+    },
+    "price": {
+      "type": "Number",
+      "required": false,
+      "default": 0.0,
+      "scale": 10,
+      "precision": 2,
+      "postgresql": {
+        "columnName": "price",
         "dataType": "double precision",
         "dataScale": 10,
         "dataPrecision": 2

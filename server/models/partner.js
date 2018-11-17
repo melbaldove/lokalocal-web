@@ -53,7 +53,7 @@ module.exports = function(Partner) {
       .then(partner => {
         //checkPassword(password, partner.passwd)
        if (partner.passwd === password) {
-         return Promise.resolve(true);
+         return Promise.resolve(partner);
        }
 
        return Promise.reject(false)

@@ -31,6 +31,9 @@
     }
   },
   "session": {},
+  "session:before": {
+    "cookie-parser": { "params": "hackmanila" }
+  },
   "auth": {},
   "parse": {
     "body-parser#json": {},
