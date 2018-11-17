@@ -16,7 +16,6 @@ module.exports = function(Transaction) {
           }
         })
         .then(transactions => {
-          console.log(transactions);
           return {
             month: month,
             amount: transactions.reduce((acc, curr) => acc + parseFloat(curr.amount), 0),
