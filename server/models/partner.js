@@ -5,7 +5,6 @@ const SALT_WORK_FACTOR = 10;
 const crypto = require('crypto');
 const app = require('../server');
 // bcrypt's max length is 72 bytes;
-// See https://github.com/kelektiv/node.bcrypt.js/blob/45f498ef6dc6e8234e58e07834ce06a50ff16352/src/node_blf.h#L59
 const MAX_PASSWORD_LENGTH = 72;
 const bcrypt = require('bcryptjs');
 
@@ -22,7 +21,6 @@ module.exports = function(Partner) {
           };
         })
     }
-
     next();
   });
 
@@ -125,7 +123,7 @@ module.exports = function(Partner) {
       }
     )
       .toPromise();
-  }
+  };
 
   Partner.remoteMethod('buyCoffee', {
     http: {path: '/:partnerId/buy', verb: 'post'},
@@ -179,8 +177,6 @@ module.exports = function(Partner) {
           })
         })
     });
-
-
   };
 
   Partner.remoteMethod('menuItemsWithBestSeller', {

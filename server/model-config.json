@@ -33,7 +33,7 @@
     "dataSource": "local",
     "public": true
   },
-  "loft-user": {
+  "customer": {
     "dataSource": "local",
     "public": true
   },

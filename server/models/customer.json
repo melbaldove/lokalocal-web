@@ -1,6 +1,6 @@
 {
-  "name": "loft-user",
-  "plural": "loft-user",
+  "name": "customer",
+  "plural": "customer",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -60,6 +60,16 @@
       "length": 255,
       "postgresql": {
         "columnName": "passwd",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "qrId": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "qr_id",
         "dataType": "character varying",
         "dataLength": 255
       }
