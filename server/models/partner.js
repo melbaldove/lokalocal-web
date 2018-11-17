@@ -12,8 +12,9 @@ module.exports = function(Partner) {
             total: totalCount,
             data: model,
           };
-          // next();
         })
     }
+
+    next();
   });
 };

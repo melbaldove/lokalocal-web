@@ -32,6 +32,8 @@ module.exports = function(app) {
   router.post('/partners/:partnerId', function(req, res) {
     const Partner = app.models.Partner;
 
+    console.log(req.body);
+
     return Partner.findById(req.params.partnerId)
       .then(currentPartner => {
         return Partner.upsert({
@@ -40,6 +42,7 @@ module.exports = function(app) {
         })
       })
       .then(ignore => res.redirect(`/partners/${req.params.partnerId}`))
+      .catch(ignore => res.redirect(`/partners/${req.params.partnerId}`))
   });
 
   app.use(router);

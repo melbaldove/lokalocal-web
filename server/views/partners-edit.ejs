@@ -38,11 +38,22 @@
               <tbody>
               <tr>
                 <th>Partner Name</th>
-                <td colspan="4"><input type="text" class="form-control" name="partnerName" value="<%= partner.partnerName %>"/></td>
+                <td><input type="text" class="form-control" name="partnerName" value="<%= partner.partnerName %>"/></td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td><input type="text" class="form-control" name="address" value="<%= partner.address %>"/></td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td>
+                  <input type="text" class="form-control" name="location[lat]" value="<%= partner.location.lat %>" placeholder="Latitude"/>
+                  <input type="text" class="form-control" name="location[lng]" value="<%= partner.location.lng %>" placeholder="Longitude"/>
+                </td>
               </tr>
               <tr>
                 <td>
-                  <button id="employer_form_submit" type="button" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary">
                     Submit
                   </button>
                 </td>

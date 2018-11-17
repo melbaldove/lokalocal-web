@@ -32,6 +32,25 @@
         "dataType": "character varying",
         "dataLength": 255
       }
+    },
+    "address": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "address",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "location": {
+      "type": "GeoPoint",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "location",
+        "dataType": "point"
+      }
     }
   },
   "validations": [],
