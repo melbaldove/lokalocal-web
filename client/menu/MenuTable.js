@@ -10,7 +10,12 @@ class MenuTable {
       'itemPath',
       ''
     ];
-    console.log(el);
+
+    const partnerId = document.querySelector("[name='partner-id']").content;
+
+    if (partnerId) {
+      url += `?filter[where][partnerId]=${partnerId}`;
+    }
 
     $("#menu_table").DataTable({
       searching: false,

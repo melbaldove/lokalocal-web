@@ -28,12 +28,13 @@ module.exports = function(app) {
   });
 
   router.get('/partners/overview', function(req, res) {
-    res.render('partners/overview');
+    res.render('partners/overview', {
+      partnerId: req.cookies.partner_id,
+    });
   });
 
   router.post('/partners/login', function(req, res) {
     const Partner = app.models.Partner;
-    console.log(req.body);
 
     return Partner.login(req.body)
       .then(partner => {
@@ -45,8 +46,15 @@ module.exports = function(app) {
       .catch(failed => res.redirect('/partners/login'));
   });
 
+  router.get('/partners/logout', function(req, res) {
+    res.clearCookie('partner_id');
+    res.redirect('/partners/login');
+  });
+
   router.get('/partners/menu', function(req, res) {
-    res.render('partners/menu');
+    res.render('partners/menu', {
+      partnerId: req.cookies.partner_id,
+    });
   });
 
   router.get('/partners/:partnerId', function(req, res) {
@@ -89,7 +97,9 @@ module.exports = function(app) {
   });
 
   router.get('/partners/menu/new', function(req, res) {
-    res.render('partners/menu-new');
+    res.render('partners/menu-new', {
+      partnerId: req.cookies.partner_id,
+    });
   });
 
   router.get('/partners/menu/:menuId', function(req, res) {
