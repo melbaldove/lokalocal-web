@@ -49,11 +49,9 @@ module.exports = function(Partner) {
   };
 
   Partner.login = ({ username, password }) => {
-    console.log(username, password);
     return Partner.find({ where: { username: username }})
       .then(partner => {
         //checkPassword(password, partner.passwd)
-        console.log(partner[0].passwd === password, partner[0].passwd, password);
        if (partner[0].passwd === password) {
          return Promise.resolve(partner[0]);
        }
@@ -61,6 +59,14 @@ module.exports = function(Partner) {
        return Promise.reject(false)
       })
   };
+
+  Partner.remoteMethod('login', {
+    http: {path: '/login', verb: 'post'},
+    accepts: [
+      {arg: 'fields', type: 'object', required: true, http: {source: 'body'}}
+    ],
+    returns: {root: true, type: 'object'},
+  });
 
   Partner.buyCoffee = (partnerId, order) => {
     const Menu = app.models.Menu;
