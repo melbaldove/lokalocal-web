@@ -87,7 +87,7 @@ module.exports = function(app) {
     res.render('partners/menu-new');
   });
 
-  router.post('/partners/menu/:menuId', function(req, res) {
+  router.get('/partners/menu/:menuId', function(req, res) {
     const Menu = app.models.Menu;
 
     return Menu.findById(req.params.menuId)
