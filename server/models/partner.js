@@ -49,11 +49,13 @@ module.exports = function(Partner) {
   };
 
   Partner.login = ({ username, password }) => {
+    console.log(username, password);
     return Partner.find({ where: { username: username }})
       .then(partner => {
         //checkPassword(password, partner.passwd)
-       if (partner.passwd === password) {
-         return Promise.resolve(partner);
+        console.log(partner[0].passwd === password, partner[0].passwd, password);
+       if (partner[0].passwd === password) {
+         return Promise.resolve(partner[0]);
        }
 
        return Promise.reject(false)

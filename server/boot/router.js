@@ -33,10 +33,12 @@ module.exports = function(app) {
 
   router.post('/partners/login', function(req, res) {
     const Partner = app.models.Partner;
+    console.log(req.body);
 
     return Partner.login(req.body)
       .then(partner => {
-        res.cookie('partner_id', partner.id, { signed: true , maxAge: 300000 });
+        console.log(partner);
+        res.cookie('partner_id', partner.id);
         res.set('X-Partner-ID', partner.id);
         res.redirect('/partners/overview')
       })
@@ -58,7 +60,10 @@ module.exports = function(app) {
   router.post('/partners/menu', function(req, res) {
     const Menu = app.models.Menu;
 
-    return Menu.create(req.body)
+    return Menu.create({
+      ...req.body,
+      partnerId: req.cookies.partner_id,
+    })
       .then(menu => res.redirect('/partners/menu'))
       .catch(err => {
         console.log(err);
