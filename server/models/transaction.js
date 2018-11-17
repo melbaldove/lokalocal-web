@@ -4,7 +4,7 @@ const app = require('../server');
 const Promise = require('bluebird');
 
 module.exports = function(Transaction) {
-  Transaction.getSalesVolumeByYear = (year) => {
+  Transaction.getSalesVolumeByYear = (year, partnerId) => {
     const months = [...Array(12).keys()];
 
     return Rx.Observable.from(months)
@@ -13,7 +13,8 @@ module.exports = function(Transaction) {
           where: {
             and: [
               {createdAt: {gte: new Date(year, month, 1)}},
-              {createdAt: {lte: new Date(year, month + 1, 1 - 1)}}
+              {createdAt: {lte: new Date(year, month + 1, 1 - 1)}},
+              {partnerId: partnerId}
             ]
           }
         })
@@ -33,6 +34,7 @@ module.exports = function(Transaction) {
     http: {path: '/getSalesVolumeByYear', verb: 'get'},
     accepts: [
       {arg: 'year', type: 'Number', required: true, http: {source: 'query'}},
+      {arg: 'partnerId', type: 'string', required: true, http: {source: 'query'}},
     ],
     returns: {root: true, type: 'object'},
   });

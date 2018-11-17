@@ -172,7 +172,7 @@ module.exports = function(Partner) {
         return result;
       }, {})
 
-      let sortedItems = Object.values(items).sort((a, b) => a.quantity - b.quantity);
+      let sortedItems = Object.values(items).sort((a, b) => b.quantity - a.quantity);
       return sortedItems;
     })
     .then(sortedItems => {

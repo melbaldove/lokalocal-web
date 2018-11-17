@@ -5,29 +5,10 @@ class CoffeeSalesChart {
   constructor(chart) {
     let ctx = chart.getContext('2d');
     let changer = document.getElementById('coffeeSalesChartChanger');
-    chart.style.height = '128px';
+    const partnerId = document.querySelector("[name='partner-id']").content;
+    // chart.style.height = '128px';
 
-    Rx.Observable.fromEvent(changer, 'change')
-      .map(e => e.target.value)
-      .startWith(
-        axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: changer.value}})
-          .then(response => {
-            let {data} = response;
-
-            this.updateData(this.lineChart, data.map(datum => datum.amount))
-            return changer.value;
-          })
-      )
-      .subscribe(value => {
-        return axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: value}})
-          .then(response => {
-            let {data} = response;
-
-            this.updateData(this.lineChart, data.map(datum => datum.amount))
-          })
-      });
-
-    this.lineChart = new Chart(ctx, {
+    let lineChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ["January", "February", "March", "April", "May", "June", "July","AUgust", "september", "october", "november", "December"],
@@ -40,10 +21,31 @@ class CoffeeSalesChart {
       },
 
       // Configuration options go here
-      options: {
-        responsive: true,
-      }
+      options: {}
     });
+
+    Rx.Observable.fromEvent(changer, 'change')
+      .map(e => e.target.value)
+      // .startWith(
+      //   axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: changer.value, partnerId: partnerId}})
+      //     .then(response => {
+      //       let {data} = response;
+      //
+      //       this.updateData(this.lineChart, data.map(datum => datum.amount))
+      //       console.log(changer.value);
+      //       return changer.value;
+      //     })
+      // )
+      .subscribe(value => {
+        return axios.get(`/api/transaction/getSalesVolumeByYear`, {params: {year: value, partnerId: partnerId}})
+          .then(response => {
+            let {data} = response;
+
+            this.updateData(lineChart, data.map(datum => datum.amount))
+          })
+      });
+
+
   }
 
   updateData(chart, data) {
