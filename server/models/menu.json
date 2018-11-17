@@ -53,12 +53,12 @@
         "dataLength": 255
       }
     },
-    "vendorId": {
+    "partnerId": {
       "type": "String",
       "required": true,
       "length": 255,
       "postgresql": {
-        "columnName": "vendor_id",
+        "columnName": "partner_id",
         "dataType": "character varying",
         "dataLength": 255
       }
