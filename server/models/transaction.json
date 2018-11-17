@@ -1,0 +1,66 @@
+{
+  "name": "transaction",
+  "plural": "transaction",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "entries"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "Number",
+      "required": false,
+      "id": 1,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "serial"
+      }
+    },
+    "description": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "postgresql": {
+        "columnName": "description",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "amount": {
+      "type": "Number",
+      "required": true,
+      "scale": 20,
+      "precision": 2,
+      "postgresql": {
+        "columnName": "amount",
+        "dataType": "numeric",
+        "dataPrecision": 2,
+        "dataScale": 20
+      }
+    },
+    "debit": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "debit",
+        "dataType": "integer"
+      }
+    },
+    "credit": {
+      "type": "Number",
+      "required": true,
+      "postgresql": {
+        "columnName": "credit",
+        "dataType": "integer"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

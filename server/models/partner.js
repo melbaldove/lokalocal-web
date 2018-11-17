@@ -1,7 +1,9 @@
 'use strict';
 // const Promise = require('bluebird');
+const Rx = require('rxjs/Rx');
 const SALT_WORK_FACTOR = 10;
 const crypto = require('crypto');
+const app = require('../server');
 // bcrypt's max length is 72 bytes;
 // See https://github.com/kelektiv/node.bcrypt.js/blob/45f498ef6dc6e8234e58e07834ce06a50ff16352/src/node_blf.h#L59
 const MAX_PASSWORD_LENGTH = 72;
@@ -61,4 +63,73 @@ module.exports = function(Partner) {
        return Promise.reject(false)
       })
   };
+
+  Partner.buyCoffee = (partnerId, order) => {
+    const Menu = app.models.Menu;
+    const Balance = app.models.Balance;
+    const Wallet = app.models.Wallet;
+    const Transaction = app.models.Transaction;
+
+    let {
+      items,
+      card
+    } = order;
+
+    return Rx.Observable.zip(
+      Rx.Observable.from(items)
+        .flatMap(item => {
+          return Menu.find({
+            where: {and: [{id: item.itemId}, {partnerId: partnerId}]}
+          })
+          .then(menuItems => {
+            const menuItem = menuItems[0];
+            return {
+              id: item.itemId,
+              itemCode: menuItem.itemCode,
+              itemName: menuItem.itemName,
+              itemPath: menuItem.itemPath,
+              coffeeNeeded: menuItem.coffeeNeeded,
+              price: menuItem.price,
+              quantity: item.quantity,
+            };
+          })
+        })
+        .toArray(),
+      Wallet.find({ where: {loftCardNumber: card}})
+        .then(wallets => Balance.findById(wallets[0].id)),
+      (menuItems, walletBalance) => {
+        // let wallet = wallets[0];
+
+        let totalPrice = 0;
+
+        menuItems.forEach(item => {
+          totalPrice += item.price * item.quantity;
+        });
+
+        if (totalPrice > parseFloat(walletBalance.balance)) {
+          return Promise.reject({
+            status: 400,
+            message: 'Insufficient credit',
+          })
+        }
+
+        return Transaction.create({
+          description: "another sample transaction",
+          amount: totalPrice,
+          debit: walletBalance.accountId,
+          credit: 1,
+        })
+      }
+    )
+      .toPromise();
+  }
+
+  Partner.remoteMethod('buyCoffee', {
+    http: {path: '/:partnerId/buy', verb: 'post'},
+    accepts: [
+      {arg: 'partnerId', type: 'string', required: true, http: {source: 'path'}},
+      {arg: 'order', type: 'object', required: true, http: {source: 'body'}}
+    ],
+    returns: {root: true, type: 'object'},
+  });
 };

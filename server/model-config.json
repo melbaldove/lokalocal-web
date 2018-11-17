@@ -36,5 +36,9 @@
   "loft-user": {
     "dataSource": "local",
     "public": true
+  },
+  "transaction": {
+    "dataSource": "local",
+    "public": true
   }
 }
