@@ -14,7 +14,7 @@ module.exports = function(Customer) {
           passwd: fields.password,
           qrId: wallet.loftCardNumber,
         })
-        .catch(err => Wallet.delete(wallet))
+        .catch(err => Wallet.destroyById(wallet.id))
       })
   };
 
