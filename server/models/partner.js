@@ -52,6 +52,12 @@ module.exports = function(Partner) {
     return Partner.find({ where: { username: username }})
       .then(partner => {
         //checkPassword(password, partner.passwd)
+        if (!partner[0]) {
+          return Promise.reject({
+            status: 500,
+            message: "Username and/or password is not correct.",
+          })
+        }
        if (partner[0].passwd === password) {
          return Promise.resolve(partner[0]);
        }
