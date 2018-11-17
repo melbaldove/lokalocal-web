@@ -10,13 +10,17 @@ module.exports = function(Customer) {
         if (customers.length == 1) {
           return customers[0];
         }
+
+        return {
+          lastName: "unregistered",
+        }
       })
   };
 
   Customer.remoteMethod('byQRid', {
     http: {path: '/byQrid', verb: 'get'},
     accepts: [
-      {arg: 'qrId', type: 'string', required: true, http: {source: 'path'}},
+      {arg: 'qrId', type: 'string', required: true, http: {source: 'query'}},
     ],
     returns: {root: true, type: 'object'},
   });
