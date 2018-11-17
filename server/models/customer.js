@@ -5,24 +5,21 @@ module.exports = function(Customer) {
   Customer.registration = (fields) => {
     const Wallet = app.models.Wallet;
 
-    return Wallet.create()
-      .then(wallet => {
+    return Wallet.find({ where:{ loftCardNumber: fields.qrId }})
+      .then(wallets => {
+        if (wallets.length == 0) {
+          return Promise.reject({
+            status: 400,
+            message: "Invalid credit",
+          })
+        }
         return Customer.create({
           lastName: fields.lastName,
           firstName: fields.firstName,
           username: fields.username,
           passwd: fields.password,
-          qrId: wallet.loftCardNumber,
-        })
-        .catch(err => {
-          return Wallet.destroyById(wallet.id)
-            .then(ignore => {
-              return Promise.reject({
-                status: 500,
-                message: err,
-              })
-            })
-        })
+          qrId: fields.qrId,
+        });
       })
   };
 
