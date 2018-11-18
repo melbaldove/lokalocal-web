@@ -100,7 +100,7 @@ module.exports = function(Transaction) {
       limit: 5,
     })
       .then(transactions => {
-        let orders = transactions.filter(transaction => transaction.order)
+        let orders = transactions.filter(transaction => transaction.order && transaction.order.items)
           .map(transaction => transaction.order.items);
         let uniqueItemOrders = [].concat.apply([], orders)
           .reduce((result, order) => {
