@@ -90,6 +90,7 @@ module.exports = function(app) {
 
     return Bean.findById(req.params.beanId)
       .then(bean => {
+        console.log(req);
         if (bean) {
           bean.beanName = req.body.beanName;
           bean.beanCode = req.body.beanCode;
