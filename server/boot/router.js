@@ -91,11 +91,13 @@ module.exports = function(app) {
 
     return Bean.findById(req.params.beanId)
       .then(bean => {
-        bean.beanName = req.body.beanName;
-        bean.beanCode = req.body.beanCode;
+        if (bean) {
+          bean.beanName = req.body.beanName;
+          bean.beanCode = req.body.beanCode;
 
-        return Bean.upsert(bean)
-          .then(ignore => res.redirect(`/bean/${req.params.beanId}`))
+          return Bean.upsert(bean)
+            .then(ignore => res.redirect(`/bean/${req.params.beanId}`))
+        }
       });
   });
 
