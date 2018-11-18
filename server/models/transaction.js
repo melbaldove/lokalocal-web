@@ -92,6 +92,7 @@ module.exports = function(Transaction) {
 
   Transaction.latestBuy = (partnerId) => {
     const Menu = app.models.Menu;
+    const Bean = app.models.Bean;
 
     return Transaction.find({
       where: { partnerId: partnerId },
@@ -101,35 +102,47 @@ module.exports = function(Transaction) {
       .then(transactions => {
         let orders = transactions.map(transaction => transaction.order.items);
         let uniqueItemOrders = [].concat.apply([], orders)
-          // .reduce((result, order) => {
-          //   if (!order.itemId) {
-          //     return result;
-          //   }
-          //
-          //   if (!result[order.itemId]) {
-          //     result[order.itemId] = {
-          //       itemId: order.itemId,
-          //       quantity: 0
-          //     }
-          //   }
-          //
-          //   result[order.itemId].quantity += order.quantity;
-          //   return result;
-          // }, {})
+          .reduce((result, order) => {
+            if (!order.itemId) {
+              return result;
+            }
+
+            if (!result[order.itemId]) {
+              result[order.itemId] = {
+                itemId: order.itemId,
+                quantity: 0
+              }
+            }
+
+            result[order.itemId].quantity += order.quantity;
+            return result;
+          }, {})
 
         return Object.values(uniqueItemOrders);
       })
       .then(orders => {
         return Promise.map(orders, order => {
+          // console.log(order);
           return Menu.findById(order.itemId)
             .then(menuItem => {
-              return {
-                itemId: menuItem.itemId,
-                itemName: menuItem.itemName,
-                itemPath: menuItem.itemPath,
-                totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
-              };
+              return Bean.find({ where:{beanCode:menuItem.bean} })
+                .then(beans => {
+                  return {
+                    itemPath: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgk-WwOEEQKuZFwJCRusZJSzYfg6HfKOMlCrjJ9al7P7SAqr66Wg`,
+                    itemName: beans[0].beanName,
+                    totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
+                  };
+                })
             })
+
+            // .then(menuItem => {
+            //   return {
+            //     itemId: menuItem.itemId,
+            //     itemName: menuItem.itemName,
+            //     itemPath: menuItem.itemPath,
+            //     totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
+            //   };
+            // })
         })
       })
   };

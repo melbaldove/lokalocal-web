@@ -64,6 +64,16 @@
         "dataLength": 255
       }
     },
+    "bean": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "postgresql": {
+        "columnName": "bean",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
     "coffeeNeeded": {
       "type": "Number",
       "required": true,
