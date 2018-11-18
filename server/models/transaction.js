@@ -128,10 +128,13 @@ module.exports = function(Transaction) {
             .then(menuItem => {
               return Bean.find({ where:{beanCode:menuItem.bean} })
                 .then(beans => {
-                  return {
-                    itemPath: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgk-WwOEEQKuZFwJCRusZJSzYfg6HfKOMlCrjJ9al7P7SAqr66Wg`,
-                    itemName: beans[0].beanName,
-                    totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
+                  if (beans[0]) {
+                    return {
+                      itemPath: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgk-WwOEEQKuZFwJCRusZJSzYfg6HfKOMlCrjJ9al7P7SAqr66Wg`,
+                      itemName: beans[0].beanName,
+                      itemCode: beans[0].beanCode,
+                      totalCoffeeBeans: menuItem.coffeeNeeded * order.quantity,
+                    };
                   };
                 })
             })
@@ -145,6 +148,27 @@ module.exports = function(Transaction) {
             //   };
             // })
         })
+          .then(beans => {
+            let uniqueBeans = beans.reduce((result, bean) => {
+              if (!bean.itemCode) {
+                return result;
+              }
+
+              if (!result[bean.itemCode]) {
+                result[bean.itemCode] = {
+                  itemCode: bean.itemCode,
+                  itemPath: bean.itemPath,
+                  itemName: bean.itemName,
+                  totalCoffeeBeans: 0,
+                }
+              }
+
+              result[bean.itemCode].totalCoffeeBeans += bean.totalCoffeeBeans;
+              return result;
+            }, {})
+
+            return Object.values(uniqueBeans);
+          })
       })
   };
 
