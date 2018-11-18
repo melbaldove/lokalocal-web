@@ -47,7 +47,7 @@ module.exports = function(app) {
         console.log(partner);
         res.cookie('partner_id', partner.id);
         res.set('X-Partner-ID', partner.id);
-        res.redirect('/partners/overview')
+        return res.redirect('/partners/overview');
       })
       .catch(failed => res.redirect('/partners/login'));
   });
@@ -115,7 +115,7 @@ module.exports = function(app) {
       .then(menu => res.render('partners/menu-edit', { menu, partnerId: req.cookies.partner_id,}))
   });
 
-  router.post('/partners/menu/:menuId', function(req, res) {
+  router.post('/partners/menu/:menuId', function(req, res)  {
     const Menu = app.models.Menu;
 
     return Menu.findById(req.params.menuId)
