@@ -44,9 +44,8 @@ module.exports = function(app) {
 
     return Partner.login(req.body)
       .then(partner => {
-        console.log(partner);
         res.cookie('partner_id', partner.id);
-        res.set('X-Partner-ID', partner.id);
+        // res.set('X-Partner-ID', partner.id);
         return res.redirect('/partners/overview');
       })
       .catch(failed => res.redirect('/partners/login'));
