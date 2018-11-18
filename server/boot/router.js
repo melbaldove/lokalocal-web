@@ -63,6 +63,10 @@ module.exports = function(app) {
     });
   });
 
+  router.get('/bean', function(req, res) {
+    res.render('bean');
+  });
+
   router.get('/partners/:partnerId', function(req, res) {
     const Partner = app.models.Partner;
 
