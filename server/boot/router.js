@@ -78,6 +78,14 @@ module.exports = function(app) {
       .then(bean => res.render('bean-edit', {bean, }));
   });
 
+  router.post('/bean/new', function(req, res) {
+    const Bean = app.models.Bean;
+
+    return Bean.create(req.body)
+      .then(ignore => res.redirect('/bean'))
+      .catch(ignore => res.redirect('/bean'));
+  });
+
   router.post('/bean/:beanId', function(req, res) {
     const Bean = app.models.Bean;
 
@@ -89,14 +97,6 @@ module.exports = function(app) {
         return Bean.upsert(bean)
           .then(ignore => res.redirect(`/bean/${req.params.beanId}`))
       });
-  });
-
-  router.post('/bean/new', function(req, res) {
-    const Bean = app.models.Bean;
-
-    return Bean.create(req.body)
-      .then(ignore => res.redirect('/bean'))
-      .catch(ignore => res.redirect('/bean'));
   });
 
   router.get('/partners/:partnerId', function(req, res) {
