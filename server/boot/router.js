@@ -67,6 +67,38 @@ module.exports = function(app) {
     res.render('bean');
   });
 
+  router.get('/bean/new', function(req, res) {
+    res.render('bean-new');
+  });
+
+  router.get('/bean/:beanId', function(req, res) {
+    const Bean = app.models.Bean;
+
+    return Bean.findById(req.params.beanId)
+      .then(bean => res.render('bean-edit', {bean, }));
+  });
+
+  router.post('/bean/:beanId', function(req, res) {
+    const Bean = app.models.Bean;
+
+    return Bean.findById(req.params.beanId)
+      .then(bean => {
+        bean.beanName = req.body.beanName;
+        bean.beanCode = req.body.beanCode;
+
+        return Bean.upsert(bean)
+          .then(ignore => res.redirect(`/bean/${req.params.beanId}`))
+      });
+  });
+
+  router.post('/bean/new', function(req, res) {
+    const Bean = app.models.Bean;
+
+    return Bean.create(req.body)
+      .then(ignore => res.redirect('/bean'))
+      .catch(ignore => res.redirect('/bean'));
+  });
+
   router.get('/partners/:partnerId', function(req, res) {
     const Partner = app.models.Partner;
 

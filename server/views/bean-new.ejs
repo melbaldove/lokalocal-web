@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include head %>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <% include header %>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <% include sidebar.ejs %>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- content -->
+  <div class="content-wrapper">
+
+    <section class="content-header">
+      <a href="/bean">
+        <i class="fa fa-caret-left"></i>
+        Back
+      </a>
+      <h1>New Coffee Bean</h1>
+    </section>
+
+
+    <section class="content">
+      <div class="container-fluid">
+        <form method="POST" action="/bean/new">
+          <fieldset>
+            <table class="table table-settings">
+              <tbody>
+              <tr>
+                <th>Bean Name</th>
+                <td>
+                  <input type="text" class="form-control" name="beanName"/>
+                </td>
+              </tr>
+              <tr>
+                <th>Bean Code</th>
+                <td>
+                  <input type="text" class="form-control" name="beanCode"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type="submit" class="btn btn-primary">
+                    Submit
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- end: content -->
+
+  <footer class="main-footer">
+    <% include footer.ejs %>
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<% include foot.ejs %>
+</body>
+</html>
