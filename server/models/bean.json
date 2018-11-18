@@ -1,0 +1,53 @@
+{
+  "name": "bean",
+  "plural": "bean",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "bean"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "String",
+      "id": 1,
+      "required": false,
+      "defaultFn": "uuidv4",
+      "length": 255,
+      "postgresql": {
+        "columnName": "id",
+        "dataType": "varchar",
+        "dataLength": 255,
+        "nullable": "NO"
+      }
+    },
+    "beanCode": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "bean_code",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    },
+    "beanName": {
+      "type": "String",
+      "required": true,
+      "length": 255,
+      "postgresql": {
+        "columnName": "bean_name",
+        "dataType": "character varying",
+        "dataLength": 255
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "hidden": ["username", "passwd"],
+  "methods": {}
+}

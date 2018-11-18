@@ -40,5 +40,9 @@
   "transaction": {
     "dataSource": "local",
     "public": true
+  },
+  "bean": {
+    "dataSource": "local",
+    "public": true
   }
 }
